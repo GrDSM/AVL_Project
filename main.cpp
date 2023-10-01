@@ -511,7 +511,6 @@ int main()
         {
             cout << "\n";
         }
-        cout << "pooppoo head";
     }
 
 }
