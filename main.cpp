@@ -5,22 +5,7 @@
 
 using namespace std;
 
-int findBalance(Node* node)
-{
-    int leftHeight = 0;
-    int rightHeight = 0;
-    if (node->left != nullptr)
-    {
-        leftHeight = node->left->height;
-    }
-
-    if (node->right != nullptr)
-    {
-        rightHeight = node->right->height;
-    }
-    return leftHeight - rightHeight;
-}
-
+//finds the heights of the node's children and sets the node's height to 1 plus the height of the tallest child
 int findHeight(Node* node)
 {
     int leftHeight = 0;
@@ -310,6 +295,34 @@ int printLevelCount(Node* node)
     return node->height;
 }
 
+Node* removeInorder(Node* node, int& counter, int value, bool& remover, int& amount, int& ID)
+{
+
+    if (node->left != nullptr && !remover)
+    {
+        removeInorder(node->left, counter, value, remover, amount, ID);
+    }
+
+    counter++;
+    if (value == counter && !remover)
+    {
+        ID = node->value;
+        remover = true;
+    }
+
+    if (node->right != nullptr && !remover)
+    {
+        removeInorder(node->right, counter, value, remover, amount, ID);
+    }
+    counter--;
+
+    if(counter == 0 && remover)
+    {
+        return remove(node, ID, amount);
+    }
+    return node;
+}
+
 int main()
 {
     Node* root = nullptr;
@@ -502,6 +515,28 @@ int main()
             }
 
         }
+        else if (line == "removeInorder")
+        {
+            cin >> line;
+            bool isNumber = true;
+            for (char c: line)
+            {
+                if (!isdigit(c))
+                    isNumber = false;
+            }
+
+            if (isNumber && stoi(line) <= bstAmount)
+            {
+                counter = 0;
+                int ID = stoi(line);
+                bool remover = false;
+                int value = 0;
+                removeInorder(root, counter, ID, remover, bstAmount, value);
+
+            } else {
+                cout << "unsuccessful";
+            }
+        }
         else
         {
             cout << "unsuccessful";
@@ -511,6 +546,6 @@ int main()
         {
             cout << "\n";
         }
-    }
 
+    }
 }

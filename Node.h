@@ -7,19 +7,23 @@
 #include <string>
 using namespace std;
 
-
+//
 class Node
 {
-
-public:
+    //initializes the value (aka the student's ID), name, and height variables
     int value;
     string name;
     int height;
+
+    //initializes the left and right nodes and automatically makes them nullptrs
     Node* left = nullptr;
     Node* right = nullptr;
+
+    //creates the constructor method
     Node(string& _name, int& _value, int _height);
-    void setLeft(Node* node);
-    void setRight(Node* node);
+public:
+    int findBalance(Node* node);
+
 };
 
 
